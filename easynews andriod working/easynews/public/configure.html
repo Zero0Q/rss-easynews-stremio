@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easynews RSS Search - Stremio Addon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body, html {
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
+       }
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+            url('/backdrop.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100%;
+            padding: 20px;
+        }
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #e50914;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            flex-wrap: wrap;
+        }
+        .description {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 4px;
+            padding: 40px;
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+            height: fit-content;
+            line-height: 1.6;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .description h2 {
+            color: #e50914;
+            margin-bottom: 1rem;
+        }
+        .description p {
+            margin-bottom: 1rem;
+        }
+        .description ul {
+            margin-left: 20px;
+            margin-bottom: 1rem;
+        }
+        .description li {
+            margin-bottom: 0.5rem;
+        }
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 4px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            height: fit-content;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+        }
+        .input-container {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .input {
+            width: 100%;
+            height: 50px;
+            background-color: rgba(51, 51, 51, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: white;
+            padding: 16px 20px 0;
+            font-size: 1rem;
+            outline: none;
+        }
+        .input:focus {
+            background-color: rgba(69, 69, 69, 0.8);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .input-label {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            transition: all 0.1s ease;
+            color: #8c8c8c;
+            pointer-events: none;
+        }
+        .input:focus + .input-label,
+        .input:not(:placeholder-shown) + .input-label {
+            top: 7px;
+            font-size: 0.7rem;
+        }
+        .btn {
+            width: 100%;
+            height: 50px;
+            background-color: #e50914;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 24px 0 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn:hover {
+            background-color: #f40612;
+        }
+        .info {
+            color: #737373;
+            font-size: 0.9rem;
+            margin-top: 16px;
+        }
+        #installURL {
+            width: 100%;
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+        .copy-btn {
+            background-color: #e50914;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+        .copy-btn:hover {
+            background-color: #f40612;
+        }
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+            .description, .form-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">EASYNEWS RSS FEED</div>
+        <div class="content-wrapper">
+            <div class="description">
+                <h2>About This Addon</h2>
+                <p>This Stremio addon enables seamless integration with Easynews, allowing you to search and stream media content directly through Stremio's interface. The addon works by:</p>
+                <ul>
+                    <li>Connecting to Easynews' RSS feed</li>
+                    <li>Providing high-quality streaming links for movies and TV shows</li>
+                    <li>Manual search for both movies and series</li>
+                </ul>
+                <p>To use this addon, you'll need an active Easynews account. Simply enter your credentials on the right to generate a custom installation link for your Stremio app.</p>
+            </div>
+            <div class="form-container">
+                <h1>Stremio Addon Installation</h1>
+                <form id="configForm" onsubmit="return false;">
+                    <div class="input-container">
+                        <input type="text" id="username" class="input" placeholder=" " required>
+                        <label for="username" class="input-label">Easynews Username</label>
+                    </div>
+                    <div class="input-container">
+                        <input type="password" id="password" class="input" placeholder=" " required>
+                        <label for="password" class="input-label">Easynews Password</label>
+                    </div>
+                    <button type="submit" class="btn" onclick="generateInstallLink()">INSTALL</button>
+                    <div id="installLinkInfo" style="display:none;">
+                        <p class="info">If the installation button doesn't work, copy and paste this URL into the Stremio addon search bar:</p>
+                        <input type="text" id="installURL" readonly>
+                        <button class="copy-btn" onclick="copyInstallUrl()">Copy URL</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        function generateInstallLink() {
+            var username = document.getElementById('username').value.trim();
+            var password = document.getElementById('password').value.trim();
+            
+            if (!username || !password) {
+                alert("Please fill in all fields!");
+                return;
+            }
+            
+            try {
+                const config = { username, password };
+                const configBase64 = btoa(JSON.stringify(config));
+                const hostUrl = window.location.href.split('/configure')[0];
+                const installUrl = `stremio://${window.location.host}/${configBase64}/manifest.json`;
+                const catalogUrl = `${hostUrl}/${configBase64}/manifest.json`;
+                
+                // Show install URL
+                document.getElementById('installURL').value = catalogUrl;
+                document.getElementById('installLinkInfo').style.display = 'block';
+                
+                // Redirect to Stremio
+                window.location.href = installUrl;
+            } catch (error) {
+                alert('Error generating installation URL: ' + error.message);
+            }
+        }
+
+        function copyInstallUrl() {
+            const urlInput = document.getElementById('installURL');
+            urlInput.select();
+            document.execCommand('copy');
+            alert('URL copied to clipboard!');
+        }
+
+        // Handle the form submission
+        document.getElementById('configForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateInstallLink();
+        });
+    </script>
+</body>
+</html>
